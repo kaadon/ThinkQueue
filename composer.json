@@ -1,0 +1,32 @@
+{
+  "name": "kaadon/thinkqueue",
+  "type": "library",
+  "description": "kaadon think queue for PHP",
+  "keywords": [
+    "queue",
+    "thinkphp",
+    "kaadon"
+  ],
+  "homepage": "https://developer.kaadon.com/",
+  "license": "Apache-2.0",
+  "require": {
+    "PHP": ">=7.4",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "topthink/framework": "^6|^8",
+    "topthink/think-queue": "^3.0"
+  },
+  "authors": [
+    {
+      "name": "kaadon",
+      "email": "kaadon.com@gmail.com",
+      "homepage": "https://www.kaadon.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Kaadon\\ThinkQueue\\": "src"
+    }
+  }
+}

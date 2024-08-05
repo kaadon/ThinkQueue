@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kaadon\ThinkQueue;
 
 use Kaadon\ThinkQueue\base\JobsInterface;
+use Kaadon\ThinkQueue\base\KaadonThinkQueueException;
 use ReflectionMethod;
 use think\facade\Queue;
 use think\queue\Job;
@@ -43,7 +44,6 @@ abstract class BaseJobs implements JobsInterface
         echo $this->down . '任务数据:' . "\n";
         print_r($this->JobData);
         echo "\n \n";
-
         if ($job->attempts() > 3) {
             $job->delete();
             echo "{$this->down} 执行[{$job->getJobId()}]超过 {$job->attempts()} 次错误: {$this->error} ❌ ,删除任务! \n";
@@ -111,19 +111,17 @@ abstract class BaseJobs implements JobsInterface
      * @param int $delay
      * @param string|null $queue
      * @param string|null $JobClass
-     * @return bool|string
+     * @return bool
+     * @throws \Kaadon\ThinkQueue\base\KaadonThinkQueueException
      */
-    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null)
+    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null): bool
     {
-        if (empty($task)) {
-            return false;
-        }
+        if (empty($task)) throw new KaadonThinkQueueException('任务名称不能为空') ;
         $queueData['task'] = $task;
         if (!empty($queue)) {
             $queueData['queue'] = $queue;
-        } else {
-            return false;
-        }
+        } else throw new KaadonThinkQueueException('队列名称不能为空');
+        if (empty($data)) throw new KaadonThinkQueueException('数据不能为空');
         $queueData['data'] = $data;
         if ($delay > 0) {
             $bool = Queue::later($delay, $JobClass, $queueData, $queue);

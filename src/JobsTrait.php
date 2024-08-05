@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Kaadon\ThinkQueue;
 
+use Kaadon\ThinkQueue\base\KaadonThinkQueueException;
 use think\queue\Job;
 
 /**
@@ -32,20 +33,19 @@ trait JobsTrait
     }
 
     /**
-     * @param array       $data
-     * @param string      $task
-     * @param int         $delay
+     * @param array $data
+     * @param string $task
+     * @param int $delay
      * @param string|null $queue
      * @param string|null $JobClass
-     *
      * @return bool|string
+     * @throws \Kaadon\ThinkQueue\base\KaadonThinkQueueException
      */
     public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null)
     {
         if (is_null($JobClass)) $JobClass = self::class;
-        if (empty($task) || !method_exists($JobClass, $task)) {
-            return false;
-        }
+        if (empty($task) || !method_exists($JobClass, $task)) throw new KaadonThinkQueueException('任务名称不能为空');
+        if (empty($data)) throw new KaadonThinkQueueException('数据不能为空');
         if (empty($queue)) {
             $queue = "default";
         } else if ($queue === "class") {

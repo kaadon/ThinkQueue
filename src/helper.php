@@ -31,7 +31,7 @@ if (!function_exists('kaadon_queue')) {
     function kaadon_queue(string $class,string $task,array $data,string $queue = 'default',int $delay = 0): bool
     {
         if (!method_exists($class, "Push")) throw new KaadonThinkQueueException('必须是任务类'); //判断是否是任务类
-        if (method_exists($class,$task)) throw new KaadonThinkQueueException('任务名称不能为空'); //判断任务名称是否为空
+        if (!method_exists($class,$task)) throw new KaadonThinkQueueException('任务名称不能为空'); //判断任务名称是否为空
         if (empty($data)) throw new KaadonThinkQueueException('数据不能为空'); //判断数据是否为空
         return $class::Push($data, $task, $delay, $queue, $class);
     }

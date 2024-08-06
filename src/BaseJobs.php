@@ -86,6 +86,7 @@ abstract class BaseJobs implements JobsInterface
             try {
                 $task = $this->JobData['task'];
                 $reflection = new ReflectionMethod($this, $task);
+                if (!$reflection->isPublic()) throw new \Exception('任务执行方法不是公共方法');
                 if ($reflection->isStatic()) {
                     $bool = $this::$task($this->JobData['data']);
                 } else {

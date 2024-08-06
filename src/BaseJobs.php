@@ -111,10 +111,10 @@ abstract class BaseJobs implements JobsInterface
      * @param int $delay
      * @param string|null $queue
      * @param string|null $JobClass
-     * @return bool
+     * @return string|bool
      * @throws \Kaadon\ThinkQueue\base\KaadonThinkQueueException
      */
-    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null): bool
+    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null)
     {
         if (empty($task)) throw new KaadonThinkQueueException('任务名称不能为空') ;
         $queueData['task'] = $task;

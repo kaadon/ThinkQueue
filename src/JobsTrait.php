@@ -42,7 +42,7 @@ trait JobsTrait
      * @return mixed
      * @throws \Kaadon\ThinkQueue\base\KaadonThinkQueueException
      */
-    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null)
+    public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null): bool
     {
         if (is_null($JobClass)) $JobClass = self::class;
         if (empty($task) || !method_exists($JobClass, $task)) throw new KaadonThinkQueueException('任务名称不能为空');

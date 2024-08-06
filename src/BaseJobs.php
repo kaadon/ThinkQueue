@@ -104,8 +104,8 @@ abstract class BaseJobs implements JobsInterface
 
     }
 
+
     /**
-     * 队列推送
      * @param array $data
      * @param string $task
      * @param int $delay

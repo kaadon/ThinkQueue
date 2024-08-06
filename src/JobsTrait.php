@@ -32,13 +32,14 @@ trait JobsTrait
         parent::fire($job, $data);
     }
 
+
     /**
      * @param array $data
      * @param string $task
      * @param int $delay
      * @param string|null $queue
      * @param string|null $JobClass
-     * @return bool|string
+     * @return mixed
      * @throws \Kaadon\ThinkQueue\base\KaadonThinkQueueException
      */
     public static function Push(array $data, string $task, int $delay = 0, ?string $queue = null, ?string $JobClass = null)
